@@ -13,7 +13,7 @@ if($metodo == 'POST'){
 	
 	//-------se añade la persona a la BD----
 	 $persona = new Persona();
-	 $estado = $persona->incertp($nombre);
+	 $estado = $persona->insertp($nombre);
 	//--------------------------------------
 	$jsonRetorno["estado"]=$estado;
 	echo json_encode($jsonRetorno);

@@ -14,7 +14,7 @@ if($metodo == 'POST'){
     $nombre = $_POST['nombre']; //se obtiene el valor del parametro 'nombre'
 
     $jsonRetorno["estado"]="todo bien";
-    echo json_encode($jsonRetorno); // se deviele en forma de json 
+    echo json_encode($jsonRetorno); 
 }
 
 if($metodo == 'GET'){
@@ -37,7 +37,7 @@ if($metodo == 'GET'){
 
         $jsonRetorno["nombre"]=$_GET['nombre'];
         $jsonRetorno["id"]=$_GET['id'];
-        echo json_encode($jsonRetorno); // se deviele en forma de json 
+        echo json_encode($jsonRetorno);  
     }
 }
 
@@ -56,7 +56,7 @@ if($metodo == 'PUT'){
 
         $jsonRetorno['nombre']=$nombre;
         $jsonRetorno['id']=$id;
-        echo json_encode($jsonRetorno); // se deviele en forma de json 
+        echo json_encode($jsonRetorno); 
         
     }
     else{
@@ -69,7 +69,7 @@ if($metodo == 'DELETE'){
     if(isset($_GET['id'])){ //el put, tiene get.
         $jsonRetorno['id']=$_GET['id'];
         $jsonRetorno['Estado']='deleted';
-        echo json_encode($jsonRetorno); // se deviele en forma de json     
+        echo json_encode($jsonRetorno);     
     }
     else{
         echo "Falta id.";

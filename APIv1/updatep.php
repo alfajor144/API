@@ -6,18 +6,22 @@ include_once 'persona.php';
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-if($metodo == 'DELETE'){
+if($metodo == 'PUT'){
+
+    $_PUT = json_decode(file_get_contents('php://input'),true);
 
     if(isset($_GET['id'])){ //el put, tiene get.
-	
-		//-------se elimina la persona a la BD----
+
+        $id = $_GET['id'];
+        $nombre = $_PUT['nombre'];
+		
+		//-------se actualiza la persona a la BD----
 		 $persona = new Persona();
-		 $estado = $persona->deletep($_GET['id']);
+		 $estado = $persona->updatep($id, $nombre);
 		//--------------------------------------
-
-		$jsonRetorno["estado"]=$estado;
-		echo json_encode($jsonRetorno);
-
+	
+        $jsonRetorno['estado']=$estado;
+        echo json_encode($jsonRetorno); 
     }
     else{
         $jsonRetorno['estado']="Falta el id";

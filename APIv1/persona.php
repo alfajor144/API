@@ -19,8 +19,92 @@ class persona{
         $this->nombre = $nombre;
         return $this;
     }
+	
+	public function getAll(){
+		
+		if ($this->conn->connect_error) {
+			die();
+			return 0;
+		}
+		else{
+			
+			$sql = "SELECT id, nombre FROM persona";
 
-	public function incertp($nombre){
+			$result = $this->conn->query($sql);
+			if ($result->num_rows > 0) {
+				while($rows[] = mysqli_fetch_assoc($result));
+				array_pop($rows); 
+				$resultado["persona"] = $rows;
+				$resultado["estado"]="Mostrado exitosamnete";
+				return $resultado;
+			}
+			 else{
+				$resultado["estado"]="No hay tuplas";
+				return $resultado;
+			}
+
+			$this->conn->close();
+		}
+	}
+
+
+	public function getByNombre($nombre){
+		
+		if ($this->conn->connect_error) {
+			die();
+			return 0;
+		}
+		else{
+			
+			$sql = "SELECT id, nombre FROM persona WHERE nombre = '$nombre'";
+
+			$result = $this->conn->query($sql);
+			if ($result->num_rows > 0) {
+				while($rows[] = mysqli_fetch_assoc($result));
+				array_pop($rows); 
+				$resultado["persona"] = $rows;
+				$resultado["estado"]="Mostrado exitosamnete";
+				return $resultado;
+			}
+			 else{
+				$resultado["estado"]="No hay tuplas con ese nombre";
+				return $resultado;
+			}
+
+
+			$this->conn->close();
+		}
+    }
+	
+	public function getById($id){
+		
+		if ($this->conn->connect_error) {
+			die();
+			return 0;
+		}
+		else{
+			
+			$sql = "SELECT id, nombre FROM persona WHERE id = $id";
+
+			$result = $this->conn->query($sql);
+			if ($result->num_rows == 1) {
+				while($rows[] = mysqli_fetch_assoc($result));
+				array_pop($rows); 
+				$resultado["persona"] = $rows;
+				$resultado["estado"]="Mostrado exitosamnete";
+				return $resultado;
+			}
+			 else{
+				$resultado["estado"]="No hay tuplas con ese id";
+				return $resultado;
+			}
+
+
+			$this->conn->close();
+		}
+    }
+
+	public function insertp($nombre){
 		
 		if ($this->conn->connect_error) {
 			die();
@@ -50,6 +134,24 @@ class persona{
 				return "Eliminado exitosamente";
 			} else {
 				return "Error";
+			}
+			$this->conn->close();
+		}
+    }
+	
+	public function updatep($id, $nombre){
+		
+		if ($this->conn->connect_error) {
+			die();
+			return 0;
+		}
+		else{
+			$sql = "update persona SET nombre ='$nombre' WHERE id = $id";
+
+			if ($this->conn->query($sql) === TRUE) {
+				return "Actualizado exitosamente";
+			} else {
+				return "Error al intentar actualizar";
 			}
 			$this->conn->close();
 		}
