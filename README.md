@@ -1,4 +1,5 @@
 # Easy API (PHP)
+In this repository you will find the necessary instructions to deploy and do some tests on a simple REST API made with PHP, without framework, it is the simplest possible CRUD.
 
 ## Tools needed:
 * xampp
