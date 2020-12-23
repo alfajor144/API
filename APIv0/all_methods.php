@@ -3,14 +3,6 @@
 header("Content-Type: application/json"); //header de las respuestas
 
 
-include_once 'Database.php';
-include_once 'persona.php';
-
-
-$database = new Database();
-$db = $database->connect();
-
-
 $metodo = $_SERVER['REQUEST_METHOD'];
 if($metodo == 'POST'){
      // http://localhost/01php/API/u.php
@@ -40,24 +32,8 @@ if($metodo == 'GET'){
         echo json_encode($jsonRetorno); 
     }
 
-    // http://localhost/01php/API/u2.php?nombre=jorgito&id=12
+    // http://localhost/01php/API/u.php?nombre=jorgito&id=12
     if(isset($_GET['nombre']) && isset($_GET['id'])){
-        $persona = new persona($db);
-
-        $persona->nombre = $_GET['nombre'];
-        $persona->apellido = "sfdwes";
-        $persona->fechaN = "sds";
-        $persona->pais = "sd";
-
-        if($persona->create()) {
-            $jsonRetorno["Estado"]=$_GET['Creado'];
-            //$jsonRetorno["id"]=$_GET['id'];
-            echo json_encode($jsonRetorno);
-        } else {
-            $jsonRetorno["Estado"]=$_GET['No creado'];
-            //$jsonRetorno["id"]=$_GET['id'];
-            echo json_encode($jsonRetorno);
-        }
 
         $jsonRetorno["nombre"]=$_GET['nombre'];
         $jsonRetorno["id"]=$_GET['id'];
@@ -99,3 +75,5 @@ if($metodo == 'DELETE'){
         echo "Falta id.";
     }
 }
+
+?>
