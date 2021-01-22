@@ -110,43 +110,64 @@
             <h3 style="padding-top: 15px;">Personas</h3>
 
             <p id="getall"></p>
-            <button type="button" id="idUp" onclick="getData()">GET</button>
+            <button type="button" id="idUp" onclick="getData()">GET ALL</button>
             <br>
             <br>
+            <hr>
 
             <p id="getById"></p>
             <input type="text" id="inpId">
             <button type="button" id="idUp" onclick="getDataById()">GET BY ID</button>
             <br>
             <br>
+            <hr>
 
             <p id="getByName"></p>
             <input type="text" id="inpName">
             <button type="button" id="idUp" onclick="getDataByName()">GET BY Mane</button>
             <br>
             <br>
+            <hr>
 
             <p id="pName"></p>
             <input type="text" id="iName">
             <button type="button" id="idUp" onclick="incertData()">INSERT</button>
             <br>
             <br>
+            <hr>
 
-            <p id="getById"></p>
-            <input type="text" id="inpId">
-            <button type="button" id="idUp" onclick="getDataById()">GET BY ID</button>
+            <p id="DpName"></p>
+            <input type="text" id="DinpId">
+            <button type="button" id="idUp" onclick="deleteData()">DELETE BY ID</button>
             <br>
             <br>
+            <hr>
+
+            <p id="upId"></p>
+            ID
+            <input type="text" id="puinpId">
+            <br>
+            NOMBRE
+            <input type="text" id="putNombre">
+            
+            <button type="button" id="idUp" onclick="updateData()">UPDATE</button>
+            <br>
+            <br>
+
 
         </div>
     </div>
 
     <div class="footer">
-        <p><span>Desarrollado por CBM 2020</span></p>
+        <p><span>Desarrollado por CBM 2021</span></p>
     </div>
 
 
     <script>
+
+        // setInterval(function () {
+        //     getDatac();
+        // }, 4000); // 4 segundos
 
         // AJAX - GET ALL
         function getData() {
@@ -228,15 +249,62 @@
                 }
             };
 
-
             var url = "http://localhost/01php/API/APIv1/insertp.php";
 
-            xhttp.open('POST', url, true);
+            xhttp.open('POST', url);
 
             var nomb = document.getElementById("iName").value;
-            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            request.send(nomb);
+
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+
+            xhttp.send(JSON.stringify({
+                nombre: nomb
+            }));
+
         }
+
+        // AJAX - DELETE
+        function deleteData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var myJSON = this.responseText;
+                    var myObj = JSON.parse(myJSON);
+
+                    document.getElementById("DpName").innerHTML = myObj.estado;
+
+                }
+            };
+
+            var idD = document.getElementById("DinpId").value;
+            var url = "http://localhost/API/APIv1/deletep.php?id=" + idD;
+            xhttp.open('DELETE', url);
+            xhttp.send();
+        }
+
+        // AJAX - Uptade
+        function updateData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myJSON = this.responseText;
+                    var myObj = JSON.parse(myJSON);
+                    document.getElementById("upId").innerHTML = myObj.estado;
+                }
+            };
+
+            var idPut = document.getElementById("upId").value;
+            xhttp.open('PUT', "http://localhost/API/APIv1/updatep.php?id=" + idPut);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            var putN = document.getElementById("putNombre").value;
+            xhttp.send(JSON.stringify({
+                nombre: putN
+            }));
+        }
+
+
+
     </script>
 
 
