@@ -112,7 +112,6 @@
             <p id="getall"></p>
             <button type="button" id="idUp" onclick="getData()">GET ALL</button>
             <br>
-            <br>
             <hr>
 
             <p id="getById"></p>
@@ -143,9 +142,9 @@
             <br>
             <hr>
 
-            <p id="upId"></p>
+            <p id="upIdd"></p>
             ID
-            <input type="text" id="puinpId">
+            <input type="text" id="upId">
             <br>
             NOMBRE
             <input type="text" id="putNombre">
@@ -164,12 +163,13 @@
 
 
     <script>
+        var ipHost ="http://localhost/01php/API/APIv1";
 
         // setInterval(function () {
-        //     getDatac();
-        // }, 4000); // 4 segundos
+        //     getData();
+        // }, 1000); // 4 segundos
 
-        // AJAX - GET ALL
+        // AJAX - GET ALL ---------------------------------------------------------------------
         function getData() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -180,16 +180,16 @@
 
                     var data = "";
                     myObj.persona.forEach(element =>
-                        data = data + "Id: " + element.id + ", nombre: " + element.nombre + ". "
+                        data = data +  element.id + ", nombre: " + element.nombre + "<br>"
                     );
                     document.getElementById("getall").innerHTML = data;
                 }
             };
-            xhttp.open("GET", "http://localhost/01php/API/APIv1/readp.php", true);
+            xhttp.open("GET", ipHost+"/readp.php", true);
             xhttp.send();
         }
 
-        // AJAX - GET BY ID
+        // AJAX - GET BY ID ---------------------------------------------------------------------
         function getDataById() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -206,13 +206,13 @@
                 }
             };
 
-            var url = "http://localhost/01php/API/APIv1/readp.php?id=" + document.getElementById("inpId").value;
+            var url = ipHost+"/readp.php?id=" + document.getElementById("inpId").value;
 
             xhttp.open("GET", url, true);
             xhttp.send();
         }
 
-        // AJAX - GET BY NAME
+        // AJAX - GET BY NAME ---------------------------------------------------------------------
         function getDataByName() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -229,13 +229,13 @@
                 }
             };
 
-            var url = "http://localhost/01php/API/APIv1/readp.php?nombre=" + document.getElementById("inpName").value;
+            var url = ipHost+"/readp.php?nombre=" + document.getElementById("inpName").value;
 
             xhttp.open("GET", url, true);
             xhttp.send();
         }
 
-        // AJAX - INSERT
+        // AJAX - INSERT ---------------------------------------------------------------------
         function incertData() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -249,7 +249,7 @@
                 }
             };
 
-            var url = "http://localhost/01php/API/APIv1/insertp.php";
+            var url = ipHost+"/insertp.php";
 
             xhttp.open('POST', url);
 
@@ -263,7 +263,7 @@
 
         }
 
-        // AJAX - DELETE
+        // AJAX - DELETE ---------------------------------------------------------------------
         function deleteData() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -278,24 +278,24 @@
             };
 
             var idD = document.getElementById("DinpId").value;
-            var url = "http://localhost/API/APIv1/deletep.php?id=" + idD;
+            var url = ipHost+"/deletep.php?id=" + idD;
             xhttp.open('DELETE', url);
             xhttp.send();
         }
 
-        // AJAX - Uptade
+        // AJAX - Uptade ---------------------------------------------------------------------
         function updateData() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var myJSON = this.responseText;
                     var myObj = JSON.parse(myJSON);
-                    document.getElementById("upId").innerHTML = myObj.estado;
+                    document.getElementById("upIdd").innerHTML = myObj.estado;
                 }
             };
 
             var idPut = document.getElementById("upId").value;
-            xhttp.open('PUT', "http://localhost/API/APIv1/updatep.php?id=" + idPut);
+            xhttp.open('PUT', ipHost+"/updatep.php?id=" + idPut);
             xhttp.setRequestHeader('Content-Type', 'application/json');
             var putN = document.getElementById("putNombre").value;
             xhttp.send(JSON.stringify({
