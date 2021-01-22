@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API tester</title>
+    <style>
+        html {
+            font-family: Helvetica;
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(19, 31, 71);
+            color: white;
+            text-align: center;
+        }
+
+        .header {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background-color: rgb(80, 223, 187);
+            color: white;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .selectstyle {
+            background-color: rgb(49, 160, 136);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .card {
+            background: rgb(0, 56, 121);
+            box-sizing: border-box;
+            color: rgb(255, 255, 255);
+            box-shadow: 0px 2px 18px -4px rgba(0, 0, 0, 0.75);
+            border-radius: 5px;
+        }
+
+        .contenedor {
+            position: fixed;
+            top: 74px;
+            left: 5%;
+            bottom: 70px;
+            width: 90%;
+            overflow-y: scroll;
+        }
+
+        #contt {
+            width: 100%;
+
+        }
+
+        #idd {
+            width: 50px;
+            height: 30px;
+            background-color: rgb(128, 128, 128);
+            border-style: solid;
+            border-color: rgb(19, 31, 71);
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        #idH {
+            position: relative;
+            top: -10px;
+            width: 50px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        #idUp {
+            background-color: rgb(23, 92, 172);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 15px;
+            margin: 4px;
+        }
+
+        .contenedor2 {
+            height: 150px;
+            background-color: rgb(0, 56, 121);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="header">
+        <h1>ESP32 - AP</h1>
+    </div>
+
+    <div class="contenedor">
+        <div id="cardid" class="card">
+
+            <!-- 5) test API -->
+            <h3 style="padding-top: 15px;">Personas</h3>
+
+            <p id="getall"></p>
+            <button type="button" id="idUp" onclick="getData()">GET</button>
+            <br>
+            <br>
+
+            <p id="getById"></p>
+            <input type="text" id="inpId">
+            <button type="button" id="idUp" onclick="getDataById()">GET BY ID</button>
+            <br>
+            <br>
+
+            <p id="getByName"></p>
+            <input type="text" id="inpName">
+            <button type="button" id="idUp" onclick="getDataByName()">GET BY Mane</button>
+            <br>
+            <br>
+
+            <p id="pName"></p>
+            <input type="text" id="iName">
+            <button type="button" id="idUp" onclick="incertData()">INSERT</button>
+            <br>
+            <br>
+
+            <p id="getById"></p>
+            <input type="text" id="inpId">
+            <button type="button" id="idUp" onclick="getDataById()">GET BY ID</button>
+            <br>
+            <br>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><span>Desarrollado por CBM 2020</span></p>
+    </div>
+
+
+    <script>
+
+        // AJAX - GET ALL
+        function getData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var myJSON = this.responseText;
+                    var myObj = JSON.parse(myJSON);
+
+                    var data = "";
+                    myObj.persona.forEach(element =>
+                        data = data + "Id: " + element.id + ", nombre: " + element.nombre + ". "
+                    );
+                    document.getElementById("getall").innerHTML = data;
+                }
+            };
+            xhttp.open("GET", "http://localhost/01php/API/APIv1/readp.php", true);
+            xhttp.send();
+        }
+
+        // AJAX - GET BY ID
+        function getDataById() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var myJSON = this.responseText;
+                    var myObj = JSON.parse(myJSON);
+
+                    var data = "";
+                    myObj.persona.forEach(element =>
+                        data = data + "Id: " + element.id + ", nombre: " + element.nombre + ". "
+                    );
+                    document.getElementById("getById").innerHTML = data;
+                }
+            };
+
+            var url = "http://localhost/01php/API/APIv1/readp.php?id=" + document.getElementById("inpId").value;
+
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+
+        // AJAX - GET BY NAME
+        function getDataByName() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var myJSON = this.responseText;
+                    var myObj = JSON.parse(myJSON);
+
+                    var data = "";
+                    myObj.persona.forEach(element =>
+                        data = data + "Id: " + element.id + ", nombre: " + element.nombre + ". "
+                    );
+                    document.getElementById("getByName").innerHTML = data;
+                }
+            };
+
+            var url = "http://localhost/01php/API/APIv1/readp.php?nombre=" + document.getElementById("inpName").value;
+
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+
+        // AJAX - INSERT
+        function incertData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var myJSON = this.responseText;
+                    var myObj = JSON.parse(myJSON);
+
+                    document.getElementById("pName").innerHTML = myObj.estado;
+
+                }
+            };
+
+
+            var url = "http://localhost/01php/API/APIv1/insertp.php";
+
+            xhttp.open('POST', url, true);
+
+            var nomb = document.getElementById("iName").value;
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.send(nomb);
+        }
+    </script>
+
+
+
+
+</body>

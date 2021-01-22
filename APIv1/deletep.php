@@ -1,6 +1,7 @@
 <?php
 
 header("Content-Type: application/json"); //header de las respuestas
+header('Access-Control-Allow-Origin: *'); //permite crusar informacion entre distintos dominos, muy importante! 
 
 include_once 'persona.php';
 
